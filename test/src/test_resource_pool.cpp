@@ -53,7 +53,6 @@ boost::shared_ptr<dummy_object> make_dummy()
     return obj;
 }
 
-
 TEST(TestResourcePool, Construct)
 {
 
@@ -101,7 +100,6 @@ TEST(TestResourcePool, Construct)
 
 }
 
-
 TEST(TestResourcePool, PoolDieBeforeObject)
 {
 
@@ -125,6 +123,49 @@ TEST(TestResourcePool, PoolDieBeforeObject)
 
 }
 
+TEST(TestResourcePool, UsingThreads)
+{
 
+    {
+        sak::resource_pool<dummy_object> pool( boost::bind(make_dummy) );
 
+        EXPECT_EQ(pool.size(), 0U);
+        EXPECT_EQ(pool.free(), 0U);
 
+        {
+            dummy_ptr d1 = pool.allocate();
+
+            EXPECT_EQ(pool.size(), 1U);
+            EXPECT_EQ(pool.free(), 0U);
+        }
+
+        EXPECT_EQ(pool.size(), 1U);
+        EXPECT_EQ(pool.free(), 1U);
+
+        dummy_ptr d2 = pool.allocate();
+
+        EXPECT_EQ(pool.size(), 1U);
+        EXPECT_EQ(pool.free(), 0U);
+
+        dummy_ptr d3 = pool.allocate();
+
+        EXPECT_EQ(pool.size(), 2U);
+        EXPECT_EQ(pool.free(), 0U);
+
+        EXPECT_EQ(dummy_object::m_count, 2);
+
+        {
+            dummy_ptr d4 = pool.allocate();
+
+            EXPECT_EQ(pool.size(), 3U);
+            EXPECT_EQ(pool.free(), 0U);
+        }
+
+        EXPECT_EQ(pool.size(), 3U);
+        EXPECT_EQ(pool.free(), 1U);
+
+    }
+
+    EXPECT_EQ(dummy_object::m_count, 0);
+
+}
