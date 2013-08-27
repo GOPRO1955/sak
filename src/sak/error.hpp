@@ -26,6 +26,7 @@
 #pragma once
 
 #include <cstdint>
+#include <string>
 
 //#include <error_code>
 //#include <system_error>

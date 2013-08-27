@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstdint>
+#include <string>
 #include <ctime>
 #include <algorithm>
 #include <fstream>

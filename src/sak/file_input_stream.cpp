@@ -28,6 +28,7 @@
 
 #include <fstream>
 #include <cassert>
+#include <string>
 
 namespace sak
 {

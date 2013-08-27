@@ -25,6 +25,7 @@
 
 #pragma once
 
+#include <string>
 #include <memory>
 
 #include <sak/object_registry.hpp>
