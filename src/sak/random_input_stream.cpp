@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstring>
+#include <cstdlib>
 #include <cassert>
 
 #include "random_input_stream.hpp"
