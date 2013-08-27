@@ -28,9 +28,7 @@
 #include <vector>
 #include <stdint.h>
 #include <memory>
-
 #include <type_traits>
-#include <boost/static_assert.hpp>
 
 #include "finite_input_stream.hpp"
 
@@ -90,8 +88,8 @@ namespace sak
     std::shared_ptr<buffer_input_stream>
     make_buffer_input(const std::vector<T>& v)
     {
-        BOOST_STATIC_ASSERT(std::is_pod<T>::value);
-        BOOST_STATIC_ASSERT(!std::is_pointer<T>::value);
+        static_assert(std::is_pod<T>::value, "Value must be a pod type");
+        static_assert(!std::is_pointer<T>::value, "Value cannot be a reference");
 
         uint32_t size = static_cast<uint32_t>(v.size() * sizeof(T));
         const uint8_t* data = reinterpret_cast<const uint8_t*>(&v[0]);
