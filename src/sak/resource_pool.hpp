@@ -25,10 +25,8 @@
 
 #pragma once
 
-#include <boost/function.hpp>
-#include <boost/bind.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <functional>
+#include <memory>
 
 #include <list>
 
@@ -43,10 +41,10 @@ namespace sak
         typedef Resource value_type;
 
         /// the pointer to the resource
-        typedef boost::shared_ptr<value_type> value_ptr;
+        typedef std::shared_ptr<value_type> value_ptr;
 
         /// the allocator function
-        typedef boost::function<value_ptr ()> allocator_type;
+        typedef std::function<value_ptr ()> allocator_type;
 
     public:
 
@@ -77,7 +75,7 @@ namespace sak
 
     private:
 
-        struct pool_impl : public boost::enable_shared_from_this<pool_impl>
+        struct pool_impl : public std::enable_shared_from_this<pool_impl>
         {
 
             pool_impl(const allocator_type& allocator)
@@ -103,7 +101,7 @@ namespace sak
                     ++m_pool_size;
                 }
 
-                boost::shared_ptr<pool_impl> pool = pool_impl::shared_from_this();
+                std::shared_ptr<pool_impl> pool = pool_impl::shared_from_this();
 
                 return value_ptr(resource.get(), deleter(pool, resource));
             }
@@ -138,8 +136,8 @@ namespace sak
             uint32_t m_pool_size;
         };
 
-        typedef boost::shared_ptr<pool_impl> pool_ptr;
-        typedef boost::weak_ptr<pool_impl> pool_weak_ptr;
+        typedef std::shared_ptr<pool_impl> pool_ptr;
+        typedef std::weak_ptr<pool_impl> pool_weak_ptr;
 
 
         struct deleter
@@ -173,7 +171,7 @@ namespace sak
     private:
 
         // The pool impl
-        boost::shared_ptr<pool_impl> m_pool;
+        std::shared_ptr<pool_impl> m_pool;
 
     };
 }

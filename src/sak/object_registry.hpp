@@ -28,9 +28,9 @@
 #include <map>
 #include <typeindex>
 #include <type_traits>
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
+#include <functional>
+#include <memory>
+#include <cassert>
 
 #include "object_factory_impl.hpp"
 
@@ -71,11 +71,11 @@ namespace sak
         typedef std::type_index object_id;
 
         /// The map associating an object id to an object factory
-        typedef std::map<object_id, boost::shared_ptr<object_factory> >
+        typedef std::map<object_id, std::shared_ptr<object_factory> >
         factory_map;
 
         /// The map associating an object id to an object factory
-        typedef std::map<object_id, boost::shared_ptr<void> >
+        typedef std::map<object_id, std::shared_ptr<void> >
         object_map;
 
     public:
@@ -86,7 +86,7 @@ namespace sak
 
         /// @return a factory stored in the registry
         template<class Factory>
-        boost::shared_ptr<Factory> get_factory()
+        std::shared_ptr<Factory> get_factory()
         {
             auto factory_id = get_object_id<Factory>();
             auto factory = find(m_lookup_by_factory_id, factory_id);
@@ -96,7 +96,7 @@ namespace sak
             typedef object_factory_impl<Factory> factory_type;
 
             auto factory_impl =
-                boost::dynamic_pointer_cast<factory_type>(factory);
+                std::dynamic_pointer_cast<factory_type>(factory);
 
             assert(factory_impl);
             assert(factory_impl->m_factory);
@@ -112,8 +112,8 @@ namespace sak
             auto factory_id = get_object_id<Factory>();
             auto object_id  = get_object_id<Object>();
 
-            boost::shared_ptr<object_factory> factory =
-                boost::make_shared< object_factory_impl<Factory> >();
+            std::shared_ptr<object_factory> factory =
+                std::make_shared< object_factory_impl<Factory> >();
 
             m_lookup_by_factory_id[factory_id] = factory;
             m_lookup_by_object_id[object_id] = factory;
@@ -131,7 +131,7 @@ namespace sak
         /// Once a factory has been registered, objects can be created
         /// @param factory the factory instance to be used for the Object type
         template<class Object>
-        void set_factory(const boost::shared_ptr<object_factory>& factory)
+        void set_factory(const std::shared_ptr<object_factory>& factory)
         {
             auto object_id  = get_object_id<Object>();
 
@@ -151,13 +151,13 @@ namespace sak
         /// Once a factory function has been registered, objects can be created
         /// @param func the factory function to be used for the Object type
         template<class Object>
-        void set_factory(const boost::function <
-                         boost::shared_ptr<Object>(object_registry&) > & func)
+        void set_factory(const std::function <
+                         std::shared_ptr<Object>(object_registry&) > & func)
         {
             auto object_id = get_object_id<Object>();
 
-            boost::shared_ptr<object_factory> factory =
-                boost::make_shared< object_factory_function >(func);
+            std::shared_ptr<object_factory> factory =
+                std::make_shared< object_factory_function >(func);
 
             m_lookup_by_object_id[object_id] = factory;
 
@@ -178,7 +178,7 @@ namespace sak
         {
             auto object_id = get_object_id<Object>();
 
-            auto object = boost::make_shared<Object>();
+            auto object = std::make_shared<Object>();
 
             m_lookup_by_shared_object_id[object_id] = object;
 
@@ -196,7 +196,7 @@ namespace sak
         /// without creating a default instance of the Object type.
         /// @param object the Object instance to be used for the Object type
         template<class Object>
-        void set_object(const boost::shared_ptr<Object>& object)
+        void set_object(const std::shared_ptr<Object>& object)
         {
             auto object_id = get_object_id<Object>();
 
@@ -215,13 +215,13 @@ namespace sak
         /// Returns a shared pointer to an explicitly registered Object.
         /// @return a factory stored in the registry
         template<class Object>
-        boost::shared_ptr<Object> get_object()
+        std::shared_ptr<Object> get_object()
         {
             auto object_id = get_object_id<Object>();
             auto object = find(m_lookup_by_shared_object_id, object_id);
 
             assert(object);
-            return boost::static_pointer_cast<Object>(object);
+            return std::static_pointer_cast<Object>(object);
         }
 
         /// Clears all registered factories
@@ -235,7 +235,7 @@ namespace sak
         /// Builds an Object with the registered factories
         /// @return a shared pointer to the new Object
         template<class Object>
-        boost::shared_ptr<Object> build()
+        std::shared_ptr<Object> build()
         {
             // Have you forgotten to register the parent class for Object?
             assert(has_object_id(m_lookup_by_object_id, get_object_id<Object>() ));
@@ -246,7 +246,7 @@ namespace sak
 
             auto obj = factory->build(*this);
 
-            return boost::static_pointer_cast<Object>(obj);
+            return std::static_pointer_cast<Object>(obj);
         }
 
     private:
@@ -273,7 +273,7 @@ namespace sak
         /// "compatible" object_id.
         /// @param map the map in which the object_id is stored
         /// @param id the object_id to find
-        boost::shared_ptr<object_factory>
+        std::shared_ptr<object_factory>
         find(const factory_map& map, const object_id& id) const
         {
             assert(has_object_id(map, id));
@@ -284,7 +284,7 @@ namespace sak
         /// "compatible" object_id.
         /// @param map the map in which the object_id is stored
         /// @param id the object_id to find
-        boost::shared_ptr<void>
+        std::shared_ptr<void>
         find(const object_map& map, const object_id& id) const
         {
             assert(has_object_id(map, id));

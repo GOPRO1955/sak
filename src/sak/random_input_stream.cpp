@@ -23,6 +23,9 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <cstring>
+#include <cassert>
+
 #include "random_input_stream.hpp"
 
 namespace sak
@@ -59,7 +62,7 @@ namespace sak
         assert(bytes > 0);
         assert(bytes + m_current_pos <= m_data.size());
 
-        memcpy(buffer, &m_data[m_current_pos], bytes);
+        std::memcpy(buffer, &m_data[m_current_pos], bytes);
 
         m_current_pos += bytes;
     }

@@ -26,8 +26,7 @@
 #include <ctime>
 #include <cassert>
 
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int_distribution.hpp>
+#include <random>
 
 #include "convert_endian.hpp"
 
@@ -41,9 +40,9 @@ namespace sak
         buffer::resize(size);
 
         // Random generator used to fill the buffer
-        boost::random::mt19937 rng;
+        std::mt19937 rng;
         // Uniform distribution for uint8_t type with range: [0, 255]
-        boost::random::uniform_int_distribution<uint8_t> dist;
+        std::uniform_int_distribution<uint8_t> dist;
         uint32_t seed = (uint32_t)std::time(0);
         rng.seed(seed);
 
@@ -76,9 +75,9 @@ namespace sak
         uint32_t seed = big_endian::get<uint32_t>(buffer);
 
         // Random generator used to verify the contents
-        boost::random::mt19937 rng;
+        std::mt19937 rng;
         // Uniform distribution for uint8_t type with range: [0, 255]
-        boost::random::uniform_int_distribution<uint8_t> dist;
+        std::uniform_int_distribution<uint8_t> dist;
         // Use the embedded seed
         rng.seed(seed);
 

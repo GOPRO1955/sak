@@ -27,9 +27,9 @@
 
 #include <vector>
 #include <stdint.h>
+#include <memory>
 
-#include <boost/type_traits/is_pod.hpp>
-#include <boost/type_traits/is_pointer.hpp>
+#include <type_traits>
 #include <boost/static_assert.hpp>
 
 #include "finite_input_stream.hpp"
@@ -87,16 +87,16 @@ namespace sak
     /// Helper functions making it easy to build a
     /// buffer input stream over common buffer types
     template<class T>
-    boost::shared_ptr<buffer_input_stream>
+    std::shared_ptr<buffer_input_stream>
     make_buffer_input(const std::vector<T>& v)
     {
-        BOOST_STATIC_ASSERT(boost::is_pod<T>::value);
-        BOOST_STATIC_ASSERT(!boost::is_pointer<T>::value);
+        BOOST_STATIC_ASSERT(std::is_pod<T>::value);
+        BOOST_STATIC_ASSERT(!std::is_pointer<T>::value);
 
         uint32_t size = static_cast<uint32_t>(v.size() * sizeof(T));
         const uint8_t* data = reinterpret_cast<const uint8_t*>(&v[0]);
 
-        boost::shared_ptr<buffer_input_stream> b(
+        std::shared_ptr<buffer_input_stream> b(
             new buffer_input_stream(size, data));
 
         return b;

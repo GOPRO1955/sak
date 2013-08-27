@@ -24,6 +24,7 @@
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cstdint>
+#include <memory>
 #include <ctime>
 
 #include <gtest/gtest.h>
@@ -46,7 +47,7 @@ TEST(TestBufferInputStream, CreateBufferInputStream)
             buffer[i] = (rand() % 255);
         }
 
-        boost::shared_ptr<sak::buffer_input_stream> input_stream
+        std::shared_ptr<sak::buffer_input_stream> input_stream
             = sak::make_buffer_input( buffer );
 
         ASSERT_TRUE( input_stream->size() == buffer_size );

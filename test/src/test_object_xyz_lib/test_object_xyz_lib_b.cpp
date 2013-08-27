@@ -23,6 +23,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+#include <memory>
+
 #include "test_object_xyz_lib_b.hpp"
 
 //
@@ -49,9 +51,9 @@ std::string duck::eat()
 // Duck Factory
 //
 
-boost::shared_ptr<duck> duck_factory::build(sak::object_registry& registry)
+std::shared_ptr<duck> duck_factory::build(sak::object_registry& registry)
 {
-    return boost::make_shared<duck>(registry);
+    return std::make_shared<duck>(registry);
 }
 
 
