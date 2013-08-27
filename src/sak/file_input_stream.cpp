@@ -26,6 +26,7 @@
 #include "file_input_stream.hpp"
 #include "error.hpp"
 
+#include <ios>
 #include <fstream>
 #include <cassert>
 #include <string>
