@@ -71,9 +71,12 @@ namespace sak
             return;
         }
 
-        m_file.seekg(0, std::ios::end);
+        //m_file.seekg(0, std::ios::end);
+        //m_filesize = read_position();
+        //m_file.seekg(0, std::ios::beg);
+        m_file.seekg(0, m_file.end);
         m_filesize = read_position();
-        m_file.seekg(0, std::ios::beg);
+        m_file.seekg(0, m_file.beg);
     }
 
     void file_input_stream::seek(uint32_t pos)
