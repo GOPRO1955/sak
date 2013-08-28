@@ -87,7 +87,7 @@ namespace sak
         assert(m_file.is_open());
 
         std::streamoff pos = m_file.tellg();
-        assert(static_cast<uint32_t>(pos) >= 0U);
+        assert(pos >= 0);
 
         return static_cast<uint32_t>(pos);
     }
