@@ -71,12 +71,9 @@ namespace sak
             return;
         }
 
-        //m_file.seekg(0, std::ios::end);
-        //m_filesize = read_position();
-        //m_file.seekg(0, std::ios::beg);
-        m_file.seekg(0, m_file.end);
+        m_file.seekg(0, std::ios::end);
         m_filesize = read_position();
-        m_file.seekg(0, m_file.beg);
+        m_file.seekg(0, std::ios::beg);
     }
 
     void file_input_stream::seek(uint32_t pos)
@@ -90,7 +87,7 @@ namespace sak
         assert(m_file.is_open());
 
         std::streamoff pos = m_file.tellg();
-        assert(pos >= 0);
+        assert(static_cast<uint32_t>(pos) >= 0U);
 
         return static_cast<uint32_t>(pos);
     }
