@@ -5,6 +5,7 @@
 int main()
 {
     std::vector<uint8_t> v1(10);
-    std::vector<uint8_t> v1(32);
-    std::cout << data.size() << std::endl;
+    std::cout << v1.size() << std::endl;
+    std::vector<uint8_t> v2(32);
+    std::cout << v2.size() << std::endl;
 }
