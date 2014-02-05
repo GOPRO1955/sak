@@ -26,6 +26,12 @@ namespace sak
                 m_vector.resize(capacity);
             }
 
+            /// @return the size in bytes of the data in the buffer
+            uint32_t size() const
+            {
+                return m_size;
+            }
+
         private:
 
             /// Internal storage
