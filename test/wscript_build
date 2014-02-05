@@ -5,9 +5,7 @@ bld.program(
     features = 'cxx test',
     source   = ['sak_tests.cpp'],
     target   = 'sak_tests',
-    use      = ['sak', 'gtest',
-                'boost_includes', 'boost_timer', 'boost_chrono',
-                'boost_system', 'test_object_xyz_lib_b'])
+    use      = [])
 
 
 
