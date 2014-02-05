@@ -29,8 +29,36 @@
 
 TEST(TestBuffer, construct)
 {
-    sak::buffer b;
-    EXPECT_EQ(0U, b.size());
+    {
+        SCOPED_TRACE("0");
+        sak::buffer b;
+        EXPECT_EQ(0U, b.size());
+    }
+    {
+        SCOPED_TRACE("8");
+        sak::buffer b(8);
+        EXPECT_EQ(0U, b.size());
+    }
+    {
+        SCOPED_TRACE("10");
+        sak::buffer b(10);
+        EXPECT_EQ(0U, b.size());
+    }
+    {
+        SCOPED_TRACE("16");
+        sak::buffer b(16);
+        EXPECT_EQ(0U, b.size());
+    }
+    {
+        SCOPED_TRACE("128");
+        sak::buffer b(128);
+        EXPECT_EQ(0U, b.size());
+    }
+    {
+        SCOPED_TRACE("256");
+        sak::buffer b(256);
+        EXPECT_EQ(0U, b.size());
+    }
 }
 
 TEST(TestBuffer, resize)
@@ -90,12 +118,11 @@ TEST(TestBuffer, append_to_empty_with_storage)
 TEST(TestBuffer, append_to_initialized)
 {
     {
-        std::vector<uint8_t> data(32, 'x');
-        EXPECT_EQ(32U, data.size());
-
         sak::buffer b(10);
         EXPECT_EQ(0U, b.size());
 
+        std::vector<uint8_t> data(32, 'x');
+        EXPECT_EQ(32U, data.size());
         b.append(&data[0], static_cast<uint32_t>(data.size()));
         EXPECT_EQ(data.size(), b.size());
     }
@@ -112,12 +139,11 @@ TEST(TestBuffer, append_to_initialized)
     }
 
     {
-        std::vector<uint8_t> data(32, 'x');
-        EXPECT_EQ(32U, data.size());
-
         sak::buffer b(10);
         EXPECT_EQ(0U, b.size());
 
+        std::vector<uint8_t> data(32, 'x');
+        EXPECT_EQ(32U, data.size());
         b.append(sak::storage(data));
         EXPECT_EQ(data.size(), b.size());
     }
