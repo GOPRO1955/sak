@@ -30,9 +30,6 @@
 TEST(TestBuffer, append_to_initialized)
 {
     {
-        sak::buffer b(10);
-        EXPECT_EQ(0U, b.size());
-
         std::vector<uint8_t> data(32, 'x');
         EXPECT_EQ(32U, data.size());
     }
