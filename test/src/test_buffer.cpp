@@ -38,25 +38,4 @@ TEST(TestBuffer, append_to_initialized)
         b.append(&data[0], static_cast<uint32_t>(data.size()));
         EXPECT_EQ(data.size(), b.size());
     }
-
-    {
-        std::vector<uint8_t> data(32, 'x');
-        EXPECT_EQ(32U, data.size());
-
-        sak::buffer b(10);
-        EXPECT_EQ(0U, b.size());
-
-        b.append(&data[0], &data[0] + data.size());
-        EXPECT_EQ(data.size(), b.size());
-    }
-
-    {
-        sak::buffer b(10);
-        EXPECT_EQ(0U, b.size());
-
-        std::vector<uint8_t> data(32, 'x');
-        EXPECT_EQ(32U, data.size());
-        b.append(sak::storage(data));
-        EXPECT_EQ(data.size(), b.size());
-    }
 }
