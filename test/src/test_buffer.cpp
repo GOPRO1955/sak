@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <algorithm>
 
 namespace sak
 {
@@ -100,7 +101,7 @@ namespace sak
         }
 
         /// Sets the buffer to zero size
-        void buffer::clear()
+        void clear()
         {
             m_size = 0;
         }
