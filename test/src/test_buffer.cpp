@@ -35,7 +35,5 @@ TEST(TestBuffer, append_to_initialized)
 
         std::vector<uint8_t> data(32, 'x');
         EXPECT_EQ(32U, data.size());
-        b.append(&data[0], static_cast<uint32_t>(data.size()));
-        EXPECT_EQ(data.size(), b.size());
     }
 }
