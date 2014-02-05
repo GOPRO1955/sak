@@ -39,7 +39,6 @@ TEST(TestBuffer, append_to_initialized)
     {
         std::vector<uint8_t> m_vector;
         m_vector.resize(10);
-        EXPECT_EQ(0U, 0U);
 
         std::vector<uint8_t> data(32, 'x');
         EXPECT_EQ(32U, data.size());
@@ -48,10 +47,7 @@ TEST(TestBuffer, append_to_initialized)
 
 GTEST_API_ int main(int argc, char** argv)
 {
-    srand(static_cast<uint32_t>(time(0)));
-
     testing::InitGoogleTest(&argc, argv);
 
     return RUN_ALL_TESTS();
 }
-
